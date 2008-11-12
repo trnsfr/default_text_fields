@@ -1,0 +1,46 @@
+DefaultTextFields
+=================
+
+Gives your FormBuilder +text_field+ and +text_area+ tags a :default_text options.
+
+Uses JavaScript to set default value when value is blank.  Adds a "blank" class
+incase you want to grey it out.
+
+
+Example
+=======
+
+<%= f.text_field :city, :default_text => "City" %>
+
+# Note: class, onblur, onfocus, value
+
+# New object
+#
+
+@address = Address.new
+
+<input type="text" class="blank" id="address_city" name="address[city]" onblur="if (this.value.match(/^ *$/)) { this.value='City'; $(this).addClassName('blank'); };" onfocus="if (this.value == 'City') { this.value=''; $(this).removeClassName('blank'); };" size="30" value="City" /> 
+
+
+# Existing object
+# 
+
+@address = Address.find(1)
+
+<input id="address_city" name="address[city]" onblur="if (this.value.match(/^ *$/)) { this.value='City'; $(this).addClassName('blank'); };" onfocus="if (this.value == 'City') { this.value=''; $(this).removeClassName('blank'); };" size="30" type="text" value="Austin" />
+
+
+Submitting the form
+===================
+
+Unfortunately you will need to use javascript again to clear the fields onsubmit
+if they have the .blank class.
+
+Fortunately, this plugin will do it for you!
+
+When calling form_for, pass :clear_before_submit => true, and it will insert onsubmit js to clear out
+all .blank fields
+
+
+
+Copyright (c) 2008 [Beamer Wilkins], released under the MIT license
